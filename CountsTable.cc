@@ -1,17 +1,20 @@
 #include"CountsTable.h"
-#include<iostram>
-
-CountsTable::CountsTable(size_t m,size_t n){
+#include<stdlib.h>
+#include<math.h>
+#include<algorithm>
+CountsTable::CountsTable(){
+}
+CountsTable::CountsTable(unsigned m,unsigned n){
     EntryNum=pow(2,m);
-    CountsTableArr=new size_t(EntryNum);
-    fill(CountTableArr,CountTableArr+EntryNUm,n);  //weekly taken
+    CountsTableArr.resize(EntryNum,n);
 }
 
-CountsTable::ModifyTable(size_t index ,int flag){
-    if(index>0&&index<7) 
-        CountsTableArr[index]+=flag;
+void CountsTable::ModifyTable(unsigned index ,int flag){
+    unsigned count=GetCounts(index);
+    if((count<7&&count>0)||(count==7&&flag==-1)||(count==0&&flag==1))
+    CountsTableArr[index]+=flag;
 }
 
-CountsTable::GetCounts(size_t index){
+unsigned CountsTable::GetCounts(unsigned index){
     return CountsTableArr[index];
-}
+} 

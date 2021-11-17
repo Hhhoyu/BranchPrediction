@@ -1,19 +1,35 @@
 #include"Bimodal.h"
+#include<math.h>
+#include<iostream>
 
-Bimodal::Bimodal(size_t m){
+using namespace std;
+
+Bimodal::Bimodal(){
+}
+Bimodal::Bimodal(unsigned m){
     cTable=CountsTable(m,4); //the initial value of the title is 4
     EntryNum=pow(2,m);
 }
 
-inline size_t Bimodal::GetIndex(size_t pc){
-    return (EntryNum-1)&&(pc>>2); //discard the last two digits of pc
+unsigned Bimodal::GetIndex(unsigned pc){ 
+    return (EntryNum-1)&(pc>>2); //discard the last two digits of pc
 }
 
-inline bool Bimodal::Predict(size_t pc){
-    return cTable.GetCounts(GetIndex(PC))>=4;
+int Bimodal::Predict(unsigned pc){
+    if(cTable.GetCounts(GetIndex(pc))>=4) return 1;
+    else return 0;
 }
 
-void Bimodal::Update(size_t pc,bool isTaken){
-    int flag=isTaken?1:-1;
+void Bimodal::Update(unsigned pc,bool isTaken){
+    int flag=isTaken==true?1:-1;
     cTable.ModifyTable(GetIndex(pc),flag);
+}
+
+void Bimodal::Print(){
+    cout<<"FINAL BIMODAL CONTENTS";
+    for(unsigned i=0;i<EntryNum;i++){
+        cout<<endl;
+        cout<<dec<<i<<"\t"<<cTable.GetCounts(i);
+    }
+    cout<<endl;
 }
